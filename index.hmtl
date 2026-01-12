@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estetio Strategic Opportunity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --bg: #050505;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #d4af37; /* Metallic Gold */
+            --accent-glow: rgba(212, 175, 55, 0.25);
+            --card-bg: rgba(20, 20, 20, 0.4);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --glass-shine: rgba(255, 255, 255, 0.08);
+            --success: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg);
+            color: var(--text); 
+            overflow: hidden; 
+            width: 100%;
+            height: 100vh;
+            height: 100dvh; 
+            line-height: 1.6;
+        }
+
+        /* --- CINEMATIC BACKGROUND --- */
+        .cinematic-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('assets/bg-texture.jpg'), linear-gradient(135deg, #1a1200 0%, #050505 100%);
+            background-size: cover, cover;
+            background-position: center, center;
+            opacity: 0.4; 
+            z-index: -2;
+            transition: opacity 1s ease;
+        }
+        
+        .overlay-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, #050505 90%);
+            z-index: -1;
+        }
+
+        /* --- DECORATIVE ORBS --- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: breathe 8s infinite alternate;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--accent-glow); top: -150px; left: -100px; }
+        .orb-2 { width: 500px; height: 500px; background: rgba(56, 189, 248, 0.05); bottom: -150px; right: -150px; }
+
+        @keyframes breathe {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.1); opacity: 0.6; }
+        }
+
+        /* --- WATERMARK --- */
+        .watermark {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12vw; font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            white-space: nowrap; pointer-events: none; z-index: 0;
+            user-select: none; letter-spacing: 20px; text-align: center;
+        }
+
+        /* --- SLIDE LAYOUT --- */
+        .slide {
+            display: none; 
+            width: 100%;
+            height: 100vh;
+            height: 100dvh; 
+            padding: 40px 100px;
+            flex-direction: column; 
+            justify-content: center;
+            opacity: 0; 
+            transition: opacity 0.5s ease;
+            position: relative; 
+            z-index: 1;
+            overflow-y: hidden;
+        }
+        
+        .slide.active { display: flex; opacity: 1; }
+        
+        /* TYPOGRAPHY */
+        h1 { font-family: 'Playfair Display', serif; font-size: 4rem; line-height: 1.1; margin-bottom: 25px; color: white; text-shadow: 0 4px 30px rgba(0,0,0,0.8); }
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--accent); margin-bottom: 30px; letter-spacing: -0.5px; }
+        h3 { font-size: 1.3rem; font-weight: 700; color: white; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+        p { font-size: 1.05rem; color: var(--muted); margin-bottom: 15px; font-weight: 300; text-align: left; }
+        
+        .tag { 
+            border: 1px solid var(--accent); color: var(--accent); padding: 8px 20px; 
+            background: rgba(212, 175, 55, 0.08); backdrop-filter: blur(5px);
+            border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; 
+            display: inline-block; margin-bottom: 30px; 
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* GRID SYSTEM */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; width: 100%; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; width: 100%; }
+        .grid-menu { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; width: 100%; align-items: center; }
+
+        /* --- GLASS CARDS --- */
+        .card {
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border);
+            border-top: 1px solid var(--glass-shine);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 35px; border-radius: 20px; 
+            transition: all 0.4s ease;
+            height: 100%; display: flex; flex-direction: column;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+        .card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 50px -10px rgba(212, 175, 55, 0.15);
+            background: rgba(255, 255, 255, 0.07);
+        }
+        
+        /* FIX: COMPACT CARD STYLE (Agar tidak meniban footer) */
+        .card-compact {
+            padding: 25px !important;
+        }
+        .card-compact .elaboration {
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+        .card-compact h3 { margin-bottom: 5px; }
+        .card-compact p { margin-bottom: 8px; }
+        .card-compact .thesis-box { margin: 10px 0; padding: 10px; }
+
+        .card-icon { font-size: 2.2rem; color: var(--accent); margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        
+        /* IMAGE CARD (Visual Edge) */
+        .card-visual {
+            background-image: url('assets/visual-edge.jpg'), linear-gradient(45deg, #1a1a1a 25%, #222 25%, #222 50%, #1a1a1a 50%, #1a1a1a 75%, #222 75%, #222 100%);
+            background-size: cover, 20px 20px;
+            background-position: center 20%, center;
+            position: relative; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            min-height: 250px;
+            background-color: #222;
+        }
+        .card-visual::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4));
+        }
+        .card-visual > * { position: relative; z-index: 2; }
+        
+        .elaboration {
+            font-size: 0.9rem; color: #cbd5e1; border-left: 3px solid var(--accent); 
+            padding-left: 20px; margin-top: auto; padding-top: 20px;
+            font-style: italic; opacity: 0.95;
+        }
+
+        /* TEAM AVATAR STYLE */
+        .team-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background-color: #222;
+            border: 2px solid var(--accent);
+            margin-bottom: 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* THESIS BOX */
+        .thesis-box {
+            background: rgba(255,255,255,0.05);
+            border-left: 3px solid #cbd5e1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #fff;
+            line-height: 1.5;
+        }
+
+        /* --- PHONE MOCKUP --- */
+        .phone-mockup {
+            width: 280px; height: 580px;
+            background: #000;
+            border-radius: 40px;
+            border: 8px solid #222;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        .phone-notch {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 25px; background: #222;
+            border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
+            z-index: 20;
+        }
+        /* Instagram Mockup UI */
+        .ig-header { padding: 40px 15px 15px; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid #333; }
+        
+        .ig-avatar { 
+            width: 60px; height: 60px; border-radius: 50%; 
+            background-image: url('assets/ig-avatar.jpg'), linear-gradient(#333, #333);
+            background-size: cover; 
+            border: 2px solid var(--accent); 
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .ig-stats { flex: 1; display: flex; justify-content: space-around; text-align: center; }
+        .ig-num { font-weight: bold; font-size: 0.9rem; color: white; display: block; }
+        .ig-lbl { font-size: 0.6rem; color: #888; }
+        .ig-bio { padding: 10px 15px; font-size: 0.75rem; color: #ddd; line-height: 1.4; }
+        
+        .ig-highlights { display: flex; gap: 10px; padding: 10px 15px; overflow: hidden; }
+        .ig-hl-circle { 
+            width: 50px; height: 50px; border-radius: 50%; 
+            background-color: #222; border: 1px solid #444; 
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 10px; background: #000; }
+        .ig-post { 
+            aspect-ratio: 1/1; position: relative; overflow: hidden; background: #222; 
+            display: flex; align-items: center; justify-content: center;
+            color: #555; font-size: 0.7rem; text-align: center;
+            background-size: cover; background-position: center;
+        }
+        .ig-post i { font-size: 1.5rem; color: #444; opacity: 0.5; } 
+        .ig-overlay { position: absolute; top: 5px; right: 5px; color: white; font-size: 0.8rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); z-index: 2; }
+
+        /* Helper classes for IG Images with fallback */
+        .feed-1 { background-image: url('assets/feed-1-texture.jpg'), linear-gradient(#222, #1a1a1a); }
+        .feed-2 { background-image: url('assets/feed-2-doctor.jpg'), linear-gradient(#222, #1a1a1a); }
+        .feed-4 { background-image: url('assets/feed-4-laser.jpg'), linear-gradient(#222, #1a1a1a); }
+        .feed-5 { background-image: url('assets/feed-5-interior.jpg'), linear-gradient(#222, #1a1a1a); }
+        
+        /* Helper classes for TEAM Images with fallback */
+        .team-1 { background-image: url('assets/team-aditya.jpg'), linear-gradient(#222, #1a1a1a); }
+        .team-2 { background-image: url('assets/team-rafael.jpg'), linear-gradient(#222, #1a1a1a); }
+        .team-3 { background-image: url('assets/team-partner.jpg'), linear-gradient(#222, #1a1a1a); }
+
+        /* METRICS */
+        .big-stat { font-size: 3.5rem; font-weight: 700; color: white; line-height: 1; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-top: 10px; font-weight: 600; }
+        
+        .financial-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 15px; }
+        .financial-table td { padding: 15px; font-size: 1.05rem; color: #e2e8f0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .profit-row { background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), transparent); border-radius: 8px; }
+        .profit-row td { color: var(--accent); font-weight: 700; border: none; font-size: 1.2rem; }
+
+        /* NAV & FOOTER */
+        .nav-controls { position: fixed; bottom: 40px; right: 60px; display: flex; gap: 15px; z-index: 100; }
+        .btn-nav { 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+            backdrop-filter: blur(5px); color: white; width: 55px; height: 55px; 
+            border-radius: 50%; cursor: pointer; transition: all 0.3s; 
+            display: flex; align-items: center; justify-content: center; font-size: 1.4rem; 
+        }
+        .btn-nav:hover { background: var(--accent); color: black; border-color: var(--accent); transform: scale(1.1); }
+        
+        .progress-bar { position: fixed; bottom: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--accent), #fcd34d); width: 0%; transition: width 0.3s; box-shadow: 0 -2px 15px var(--accent-glow); }
+        .page-num { position: fixed; bottom: 40px; left: 60px; font-family: 'Playfair Display', serif; color: rgba(255,255,255,0.15); font-size: 3.5rem; font-weight: 700; z-index: 50; }
+        .footer-note { position: fixed; bottom: 20px; right: 60px; font-size: 0.75rem; color: rgba(255,255,255,0.3); letter-spacing: 2px; text-transform: uppercase; z-index: 50; }
+
+        /* LOGO */
+        .logo-brand { position: absolute; top: 50px; left: 100px; display: flex; align-items: center; gap: 15px; z-index: 10; }
+        .logo-symbol {
+            width: 45px; height: 45px;
+            background: linear-gradient(135deg, #fcd34d, #ca8a04);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            color: #000; font-size: 1.5rem; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+        }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: white; letter-spacing: 1px; }
+
+        /* RESPONSIVE MOBILE TWEAKS */
+        @media (max-width: 1024px) { 
+            .slide { 
+                padding: 100px 25px 120px 25px; 
+                height: auto; 
+                min-height: 100dvh; 
+                display: none; 
+                overflow-y: auto; 
+                justify-content: flex-start;
+            }
+            .slide.active { display: flex; }
+
+            .grid-2, .grid-3, .grid-menu { grid-template-columns: 1fr; gap: 30px; }
+            h1 { font-size: 2.5rem; margin-bottom: 15px; }
+            h2 { font-size: 2rem; margin-bottom: 20px; }
+            .nav-controls { bottom: 25px; right: 25px; gap: 10px; }
+            .btn-nav { width: 45px; height: 45px; font-size: 1.2rem; }
+            .page-num { bottom: 25px; left: 25px; font-size: 1.5rem; }
+            .footer-note { display: none; }
+            .logo-brand { left: 25px !important; top: 30px !important; }
+            .logo-symbol { width: 35px; height: 35px; font-size: 1.2rem; }
+            .logo-text { font-size: 1.2rem; }
+            .watermark { font-size: 15vw; opacity: 0.02; }
+            .card { padding: 25px; }
+            .big-stat { font-size: 2.5rem; }
+            .phone-mockup { width: 100%; max-width: 280px; height: auto; aspect-ratio: 9/19; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cinematic Background & Effects -->
+    <div class="cinematic-bg"></div>
+    <div class="overlay-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="watermark">CONFIDENTIAL</div>
+
+    <div class="progress-bar" id="progress"></div>
+    <div class="page-num" id="pageNum">01</div>
+    <div class="footer-note">Strategic Opportunity Deck • Confidential</div>
+
+    <!-- SLIDE 1: Hero -->
+    <div class="slide active">
+        <div class="logo-brand">
+            <div class="logo-symbol"><i class="ph-bold ph-star-four"></i></div>
+            <div class="logo-text">ESTETIO</div>
+        </div>
+
+        <div style="margin-top: auto; margin-bottom: auto; position: relative; z-index: 2;">
+            <span class="tag">The Productized Blueprint</span>
+            <h1>Cracking the<br>Aesthetic Market.</h1>
+            <p style="font-size: 1.2rem; max-width: 800px; color: #cbd5e1; line-height: 1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                Sebuah strategi untuk menembus pasar Rp 20 Triliun tanpa terjebak dalam siklus "Overhead Tinggi & Margin Tipis" agensi konvensional.
+            </p>
+            <div style="margin-top: 40px; display: flex; gap: 20px; align-items: center;">
+                <div style="width: 4px; height: 60px; background: var(--accent); box-shadow: 0 0 15px var(--accent);"></div>
+                <div>
+                    <p style="margin: 0; color: white; font-weight: 600; font-size: 1rem;">Prepared For Strategic Partners</p>
+                    <p style="margin: 0; font-size: 0.9rem; color: var(--muted);">Objective: Scalable Business Unit Creation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: THE GRIDLOCK -->
+    <div class="slide">
+        <h2>The Rp 20 Trillion Gridlock.</h2>
+        <div class="grid-2">
+            <!-- Left: Pain -->
+            <div>
+                <h3 style="margin-bottom: 20px;"><i class="ph-bold ph-eye-slash" style="color: #ef4444;"></i> The Pain: Invisible Wealth</h3>
+                <p>Ribuan klinik memiliki alat canggih & dokter hebat, namun <strong>sepi pasien</strong>. Mereka terjebak dalam dilema abadi:</p>
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid rgba(255,255,255,0.1);">
+                    <ul style="list-style: none; padding: 0; color: #cbd5e1; font-size: 0.95rem; line-height: 1.8;">
+                        <li style="margin-bottom: 10px;">
+                            <strong style="color: #ef4444;">Option A (Freelancer):</strong> Murah, tapi visual "alay", tidak standar, & sering <em>ghosting</em>.
+                        </li>
+                        <li>
+                            <strong style="color: #ef4444;">Option B (Big Agency):</strong> Kualitas bagus, tapi biaya operasional (OpEx) tidak masuk akal untuk skala klinik.
+                        </li>
+                    </ul>
+                </div>
+                
+                <p class="elaboration" style="border-left-color: #ef4444;">
+                    <strong>Akibatnya:</strong> Miliaran rupiah potensi omzet klinik menguap setiap hari karena tidak ada jembatan yang pas.
+                </p>
+            </div>
+            
+            <!-- Right: Remedy -->
+            <div class="card" style="border-color: var(--accent); background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent 80%);">
+                <h3><i class="ph-bold ph-bridge" style="color: var(--accent);"></i> The Remedy: Estetio</h3>
+                <p style="font-size: 1.2rem; color: white; font-weight: 700; margin: 15px 0;">"Pro-Quality at Freelance Speed."</p>
+                <p>Estetio hadir bukan sebagai Agensi Kreatif biasa, tapi sebagai <strong>Jembatan Strategis</strong>.</p>
+                <p style="font-size: 0.95rem;">Kami mendemokratisasi standar agensi besar (Strategy + CX + Visual High-End) agar bisa diakses oleh pasar massal melalui sistem <em>Productized Service</em>.</p>
+                <div class="elaboration">
+                    <strong>The Result:</strong> Klinik mendapatkan kualitas "Premium" dengan harga yang masuk akal, tanpa ribet.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: FROM ARTISAN TO ASSEMBLY -->
+    <div class="slide">
+        <h2>From "Artisan" to<br>"Assembly Line".</h2>
+        <div class="grid-2">
+            <div>
+                <p>Estetio didesain dengan filosofi berbeda. Kami tidak menjual "Jam Kerja Kreatif", kami menjual <strong>Produk Jadi (System)</strong>.</p>
+                <div class="card" style="margin-top: 30px; background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.3);">
+                    <h3><i class="ph-bold ph-x-circle" style="color: #ef4444;"></i> No Pitching Policy</h3>
+                    <p class="elaboration" style="border-left-color: #ef4444; margin-top: 10px;">
+                        Di agensi biasa, kita buang waktu bikin Custom Deck. Di Estetio, kami datang dengan <strong>Laporan Diagnosa</strong> berbasis data. Closing rate naik, waktu terbuang nol.
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+                    <h3><i class="ph-bold ph-check-circle" style="color: var(--success);"></i> The Fixed Menu</h3>
+                    <p class="elaboration" style="margin-top: 10px; border-left-color: var(--success);">
+                        Musuh utama margin adalah <em>Scope Creep</em>. Estetio mematikan celah ini dengan "Menu Paket". Deliverables jelas. Tim produksi bekerja dengan template.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: THE CUSTOM CURSE -->
+    <div class="slide">
+        <h2>The "Custom" Curse.</h2>
+        <div class="grid-2">
+            <div>
+                <p><strong>Dilema Agensi Besar:</strong> Kita terlalu <em>artisan</em>. Setiap klien minta solusi <em>bespoke</em> (custom). Akibatnya, waktu habis untuk pitching, brainstorming, dan revisi yang tak berujung.</p>
+                <p>Model ini "mematikan" jika dipakai untuk klien Klinik/SME. Biaya operasional SDM Senior terlalu mahal. Padahal, uang di industri Klinik Estetika sedang deras-derasnya.</p>
+                <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #ef4444;">
+                    <p style="margin: 0; font-size: 1rem; color: white; font-style: italic;">"We cannot serve mass market with boutique processes."</p>
+                </div>
+            </div>
+            <div class="card" style="justify-content: center; border-color: var(--accent); background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent 80%);">
+                <div style="text-align: center;">
+                    <div class="stat-label">Market Opportunity</div>
+                    <div class="big-stat" style="margin: 20px 0; color: var(--accent);">Rp 20T</div>
+                    <div class="stat-label">Pasar Estetika Indonesia 2026</div>
+                </div>
+                <div class="elaboration" style="text-align: center; border: none; padding-top: 30px;">
+                    "Market ini sekarang dikuasai freelancer karena Agensi Profesional belum menemukan model efisien untuk masuk."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Why Aesthetics -->
+    <div class="slide">
+        <h2>Why We Bet on Aesthetics?</h2>
+        <p>Bukan sekadar tren. Ini adalah "Golden Niche" yang tahan banting.</p>
+        <div class="grid-3" style="margin-top: 30px;">
+            <div class="card">
+                <i class="ph-fill ph-money card-icon"></i>
+                <h3>High Ticket</h3>
+                <p class="elaboration">
+                    Klinik menjual jasa mahal (Botox 5-10 Juta). Mereka punya <em>Spending Power</em> kuat untuk bayar Retainer.
+                </p>
+            </div>
+            <div class="card">
+                <i class="ph-fill ph-trend-up card-icon"></i>
+                <h3>Recession Proof</h3>
+                <p class="elaboration">
+                    Data: Pengeluaran "Beauty & Wellness" adalah pos terakhir yang dipangkas saat ekonomi sulit.
+                </p>
+            </div>
+            <!-- VISUAL CARD (AUTO-DETECT assets/visual-edge.jpg) -->
+            <div class="card card-visual">
+                <i class="ph-fill ph-camera-shutter card-icon" style="color: white;"></i>
+                <h3 style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">Visual Advantage</h3>
+                <p class="elaboration" style="border-left-color: white; color: white; text-shadow: 0 1px 5px rgba(0,0,0,0.8);">
+                    Industri 100% Visual. Jauh lebih mudah menjual "Wajah Glowing" secara visual dibanding menjual jasa B2B/Teknis.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: The Menu -->
+    <div class="slide">
+        <h2>The "Menu": Standardized.</h2>
+        <div class="grid-menu">
+            <!-- Left: Text Content -->
+            <div>
+                <p style="margin-bottom: 30px;">3 Produk Inti yang dijual sebagai paket langganan (Subscription).</p>
+                
+                <div class="card" style="margin-bottom: 20px; padding: 25px;">
+                    <h3 style="font-size: 1.1rem; color: var(--accent);">1. Visual Pack</h3>
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0;">8 Reels Video (Template), 12 Stok Foto, 1x Shooting Day.</p>
+                </div>
+                
+                <div class="card" style="margin-bottom: 20px; padding: 25px;">
+                    <h3 style="font-size: 1.1rem; color: var(--accent);">2. Traffic Pack</h3>
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0;">Meta Ads Management, Weekly Optimization, CPL Focus.</p>
+                </div>
+
+                <div class="card" style="padding: 25px;">
+                    <h3 style="font-size: 1.1rem; color: var(--accent);">3. System Pack</h3>
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0;">Landing Page, Admin SOP, Real-time Dashboard.</p>
+                </div>
+            </div>
+            
+            <!-- Right: Visual Mockup -->
+            <div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    
+                    <!-- IG Header -->
+                    <div class="ig-header">
+                        <!-- AVATAR: Will load assets/ig-avatar.jpg if present -->
+                        <div class="ig-avatar"><i class="ph-fill ph-user" style="color:#666"></i></div>
+                        <div class="ig-stats">
+                            <div><span class="ig-num">245</span><span class="ig-lbl">Posts</span></div>
+                            <div><span class="ig-num">12.5K</span><span class="ig-lbl">Followers</span></div>
+                            <div><span class="ig-num">80</span><span class="ig-lbl">Following</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- IG Bio -->
+                    <div class="ig-bio">
+                        <strong style="color:white; display:block; margin-bottom:4px;">Lumiere Aesthetics</strong>
+                        Science-backed Dermatology.<br>
+                        Jakarta, Indonesia. <span style="color:#d4af37;">#EstetioStandard</span>
+                    </div>
+
+                    <!-- IG Highlights -->
+                    <div class="ig-highlights">
+                        <div class="ig-hl-circle" style="background-image: url('assets/feed-1-texture.jpg'), linear-gradient(#222, #222);"></div>
+                        <div class="ig-hl-circle" style="background-image: url('assets/feed-4-laser.jpg'), linear-gradient(#222, #222);"></div>
+                        <div class="ig-hl-circle" style="background-image: url('assets/visual-edge.jpg'), linear-gradient(#222, #222);"></div>
+                        <div class="ig-hl-circle" style="border:1px dashed #444; color:#666;">+</div>
+                    </div>
+
+                    <!-- IG Grid -->
+                    <div class="ig-grid">
+                        <!-- Feed 1: Texture -->
+                        <div class="ig-post feed-1"><i class="ph-fill ph-drop"></i><div class="ig-overlay"><i class="ph-fill ph-play"></i></div></div>
+                        <!-- Feed 2: Doctor -->
+                        <div class="ig-post feed-2"><i class="ph-fill ph-user-focus"></i></div>
+                        <!-- Feed 3: Graphic (CSS only) -->
+                        <div class="ig-post" style="background:#f5f5f5;"><span style="font-family:'Playfair Display'; color:#333; font-size:0.6rem; font-weight:bold;">ACNE<br>MYTHS</span></div>
+                        <!-- Feed 4: Laser -->
+                        <div class="ig-post feed-4"><i class="ph-fill ph-lightning"></i><div class="ig-overlay"><i class="ph-fill ph-play"></i></div></div>
+                        <!-- Feed 5: Interior -->
+                        <div class="ig-post feed-5"><i class="ph-fill ph-house-line"></i></div>
+                        <!-- Feed 6: Quote (CSS only) -->
+                        <div class="ig-post" style="background:#111; display:flex; align-items:center; justify-content:center; text-align:center; padding:5px;"><span style="color:#d4af37; font-size:0.5rem; font-family:'Playfair Display';">"Invest in<br>your skin."</span></div>
+                    </div>
+                </div>
+                <div class="mockup-label" style="text-align: center; color: #555; margin-top: 10px; font-size: 0.8rem;">Simulated Client Output</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Systems -->
+    <div class="slide">
+        <h2>Systems Over Geniuses.</h2>
+        <p>Agensi biasa bergantung pada "Star Employee". Estetio bergantung pada <strong>Sistem</strong>.</p>
+        <div class="grid-2" style="margin-top: 40px;">
+            <div class="card">
+                <i class="ph-fill ph-lightning card-icon"></i>
+                <h3>Audit Algorithm</h3>
+                <p>Kami mengubah insting Senior Strategist menjadi <strong>"50-Point Checklist"</strong>.</p>
+                <p class="elaboration">
+                    Sistem menilai 4 pilar secara matematis. Junior Staff tinggal isi checklist. Riset 4 hari selesai dalam 4 jam.
+                </p>
+            </div>
+            <div class="card">
+                <i class="ph-fill ph-desktop card-icon"></i>
+                <h3>Live Dashboard</h3>
+                <p>Kami menghapus "Reporting Day". Tidak ada lagi AE lembur bikin PPT mingguan.</p>
+                <p class="elaboration">
+                    Klien akses Dashboard Web Real-time 24/7. Transparansi total, dan <strong>0 jam kerja admin</strong> untuk tim kita.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Financials -->
+    <div class="slide">
+        <h2>The Financial Engine.</h2>
+        <div class="grid-2">
+            <div>
+                <p>Proyeksi konservatif berdasarkan efisiensi sistem Productized.</p>
+                <div class="card">
+                    <h3>Unit Economics (Per Client)</h3>
+                    <table class="financial-table">
+                        <tr>
+                            <td>Retainer Price</td>
+                            <td style="text-align: right;">Rp 18.000.000</td>
+                        </tr>
+                        <tr>
+                            <td>(-) COGS / Delivery</td>
+                            <td style="text-align: right; color: #ef4444;">Rp 6.000.000</td>
+                        </tr>
+                        <tr class="profit-row">
+                            <td>(=) Gross Profit</td>
+                            <td style="text-align: right;">Rp 12.000.000</td>
+                        </tr>
+                    </table>
+                    <div class="elaboration">Margin 66% dimungkinkan karena minim revisi & efisiensi dashboard.</div>
+                </div>
+            </div>
+            <div class="card" style="justify-content: center; background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%); border-color: var(--accent);">
+                <div style="text-align: center;">
+                    <div class="stat-label">Year 1 Target (20 Clients)</div>
+                    <div class="big-stat" style="font-size: 3rem; margin-top: 15px; color: white;">Rp 4.3 Miliar</div>
+                    <div class="stat-label">Annual Run Rate</div>
+                    
+                    <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
+                        <div class="stat-label">Est. Net Profit</div>
+                        <div class="big-stat" style="color: var(--accent); font-size: 2.5rem;">Rp 2.5 Miliar</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Risk -->
+    <div class="slide">
+        <h2>We Know the Risks.<br>Here is Our Shield.</h2>
+        <div class="grid-2">
+            <div class="card">
+                <!-- UPDATED CONTENT: Toxic Client Risk -->
+                <h3><i class="ph-bold ph-warning-octagon"></i> Risk: The "Toxic Client"</h3>
+                <p style="font-size: 0.95rem; color: #e2e8f0; margin-bottom: 15px;">
+                    Kelemahan terbesar model Productized adalah klien "High Maintenance" yang merusak alur kerja tim produksi (Operational Drag).
+                </p>
+                <p class="elaboration" style="border-left-color: #ef4444;">
+                    <strong>The Gatekeeper Protocol:</strong> Kami tidak menerima semua uang di atas meja. Audit kami menolak 30% leads di awal jika skor operasional buruk. Kami hanya bekerja dengan klinik yang <em>Scalable</em> demi menjaga kewarasan tim & profit.
+                </p>
+            </div>
+            <div class="card">
+                <h3><i class="ph-bold ph-users-three"></i> Risk: Client Churn</h3>
+                <p style="font-size: 0.95rem; color: #e2e8f0; margin-bottom: 15px;">
+                    Klien biasanya bosan di bulan ke-4 (Risiko Putus Kontrak).
+                </p>
+                <p class="elaboration">
+                    <strong>The 4-Month Lock:</strong> Di bulan ke-4, saat performa iklan biasanya jenuh (ad fatigue), kami meluncurkan layanan baru (WA Automation System) yang terintegrasi data pasien. Klien yang sudah terikat sistem database akan berpikir 10x lipat untuk memutus kontrak karena biaya migrasinya mahal (High Switching Cost).
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: Partnership -->
+    <div class="slide">
+        <h2>Why We Should Do This Together.</h2>
+        <p>Estetio punya "Software" (Sistem, Niche). Partner punya "Hardware" (Infrastruktur).</p>
+        <div class="grid-2" style="margin-top: 30px;">
+            <div class="card" style="border-top: 3px solid var(--accent);">
+                <h3>What We Bring (Assets)</h3>
+                <ul style="margin-left: 20px; margin-top: 20px; color: #cbd5e1; font-size: 1rem; line-height: 1.8;">
+                    <li><strong>Validated System:</strong> SOP & Dashboard siap pakai.</li>
+                    <li><strong>Niche Dominance:</strong> Keahlian spesifik pasar Estetika.</li>
+                    <li><strong>Lean Team:</strong> Struktur manajemen ramping.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-top: 3px solid white;">
+                <h3>Strategic Needs</h3>
+                <div style="margin-top: 20px;">
+                    <p style="font-weight: bold; color: white; font-size: 1.1rem; margin-bottom: 5px;">1. Scalable Production</p>
+                    <p style="font-size: 0.95rem; color: #94a3b8; margin-bottom: 25px;">
+                        Memanfaatkan kapasitas tim produksi In-House Partner untuk menjamin kontrol kualitas & memaksimalkan profit grup.
+                    </p>
+                    
+                    <p style="font-weight: bold; color: white; font-size: 1.1rem; margin-bottom: 5px;">2. Shared Back-Office</p>
+                    <p style="font-size: 0.95rem; color: #94a3b8;">
+                        Support Legal & Finance agar manajemen Estetio fokus 100% pada Growth.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: THE GROWTH TRINITY (REVISED LAYOUT & TEXT) -->
+    <div class="slide" style="justify-content: flex-start; padding-top: 80px;">
+        <!-- Tag REMOVED per user request -->
+        <h2>The "Alpha" Configuration.</h2>
+        <p style="margin-bottom: 20px; color: var(--muted); font-size: 1.1rem;">
+            Tiga pilar kompetensi yang dirancang untuk mendominasi market share, bukan sekadar berpartisipasi.
+        </p>
+
+        <div class="grid-3">
+            <!-- Card 1: Aditya (REVISED TEXT) -->
+            <div class="card card-compact">
+                <div class="team-avatar team-1"></div>
+                <h3 style="font-size: 1.1rem; color: white; margin-top: 0;">The Principal Architect</h3>
+                <h4 style="font-family: 'Playfair Display'; color: var(--accent); font-size: 1.3rem; margin-bottom: 5px;">Aditya Warman</h4>
+                <p style="font-size: 0.8rem; color: #777; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">Business Design & Retention</p>
+                
+                <div class="thesis-box" style="padding: 10px; margin: 10px 0;">
+                    "Customer Experience is not a support function. It is the Business Model itself."
+                </div>
+                
+                <p class="elaboration" style="font-size: 0.85rem; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); border-left: none;">
+                    Arsitek ekosistem Estetio. Mengadaptasi framework CX untuk membangun 'The Retention Engine' untuk memenangkan Long-Term Game.
+                </p>
+            </div>
+
+            <!-- Card 2: Rafael -->
+            <div class="card card-compact">
+                <div class="team-avatar team-2"></div>
+                <h3 style="font-size: 1.1rem; color: white; margin-top: 0;">The Performance Lead</h3>
+                <h4 style="font-family: 'Playfair Display'; color: var(--accent); font-size: 1.3rem; margin-bottom: 5px;">Rafael Fernando</h4>
+                <p style="font-size: 0.8rem; color: #777; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">Digital Strategist</p>
+                
+                <div class="thesis-box" style="padding: 10px; margin: 10px 0;">
+                    "We don't buy 'Ads'. We buy 'Revenue' at a predictable discount."
+                </div>
+                
+                <p class="elaboration" style="font-size: 0.85rem; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); border-left: none;">
+                    Arsitek di balik Predictable Revenue Model. Fokus menjaga rasio CAC tetap rendah sambil memvalidasi Product-Market Fit.
+                </p>
+            </div>
+
+            <!-- Card 3: Partner -->
+            <div class="card card-compact">
+                <div class="team-avatar team-3"></div>
+                <h3 style="font-size: 1.1rem; color: white; margin-top: 0;">The Visual Authority</h3>
+                <h4 style="font-family: 'Playfair Display'; color: var(--accent); font-size: 1.3rem; margin-bottom: 5px;">Strategic Partner</h4>
+                <p style="font-size: 0.8rem; color: #777; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">Creative Director</p>
+                
+                <div class="thesis-box" style="padding: 10px; margin: 10px 0;">
+                    "In High-Ticket Aesthetics, 'Perception' is the only reality that matters."
+                </div>
+                
+                <p class="elaboration" style="font-size: 0.85rem; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); border-left: none;">
+                    Penanggung jawab Pricing Power. Merancang 'Visual Trust' yang secara psikologis memvalidasi harga mahal sebuah klinik.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: Roadmap & CTA -->
+    <div class="slide">
+        <span class="tag">THE ROADMAP</span>
+        <h1>Building an Asset,<br>Not Just Cashflow.</h1>
+        <div class="grid-3" style="margin-top: 50px;">
+            <div class="card" style="opacity: 1;">
+                <h3 style="color: var(--accent);">Phase 1: Agency</h3>
+                <p class="elaboration"><strong>Service Revenue.</strong> Validasi model bisnis dan pengumpulan data perilaku klinik.</p>
+            </div>
+            <div class="card" style="opacity: 0.7;">
+                <h3>Phase 2: SaaS</h3>
+                <p class="elaboration"><strong>Tech Product.</strong> Menggunakan profit agensi untuk membangun CRM Software khusus klinik.</p>
+            </div>
+            <div class="card" style="opacity: 0.4;">
+                <h3>Phase 3: Exit</h3>
+                <p class="elaboration"><strong>Tech Valuation.</strong> Menjual perusahaan ke Raksasa Health-Tech atau Grup RS dengan valuasi teknologi.</p>
+            </div>
+        </div>
+        <div style="margin-top: 60px; text-align: center;">
+            <p style="font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 15px;">The Opportunity is Now</p>
+            <h2 style="margin-bottom: 0; font-size: 3rem; text-shadow: 0 0 40px rgba(212, 175, 55, 0.4);">The Market is shifting.<br>Let's own the new standard.</h2>
+        </div>
+    </div>
+
+    <div class="nav-controls">
+        <button class="btn-nav" onclick="prevSlide()"><i class="ph-bold ph-caret-left"></i></button>
+        <button class="btn-nav" onclick="nextSlide()"><i class="ph-bold ph-caret-right"></i></button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progress');
+        const pageNum = document.getElementById('pageNum');
+
+        function updateUI() {
+            const percent = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = percent + '%';
+            const displayNum = currentSlide + 1;
+            pageNum.innerText = displayNum < 10 ? '0' + displayNum : displayNum;
+        }
+
+        function showSlide(n) {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[n].classList.add('active');
+            updateUI();
+        }
+
+        function nextSlide() {
+            if(currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if(currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // --- KEYBOARD & TOUCH EVENTS ---
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch / Swipe Logic
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const sensitivity = 50; 
+            if (touchEndX < touchStartX - sensitivity) nextSlide(); 
+            if (touchEndX > touchStartX + sensitivity) prevSlide(); 
+        }
+        
+        updateUI();
+    </script>
+</body>
+</html>
+```
