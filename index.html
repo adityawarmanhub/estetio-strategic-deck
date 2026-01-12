@@ -194,9 +194,11 @@
             line-height: 1.5;
         }
 
-        /* --- PHONE MOCKUP --- */
+        /* --- PHONE MOCKUP (UPDATED FOR 9 FEEDS) --- */
         .phone-mockup {
-            width: 280px; height: 580px;
+            width: 280px; 
+            /* Height increased slightly to accommodate 9 feeds comfortably */
+            height: 600px; 
             background: #000;
             border-radius: 40px;
             border: 8px solid #222;
@@ -246,13 +248,16 @@
         .ig-post i { font-size: 1.5rem; color: #444; opacity: 0.5; } 
         .ig-overlay { position: absolute; top: 5px; right: 5px; color: white; font-size: 0.8rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); z-index: 2; }
 
-        /* Helper classes for IG Images with fallback */
+        /* Helper classes for IG Images */
         .feed-1 { background-image: url('assets/feed-1-texture.jpg'), linear-gradient(#222, #1a1a1a); }
         .feed-2 { background-image: url('assets/feed-2-doctor.jpg'), linear-gradient(#222, #1a1a1a); }
         .feed-4 { background-image: url('assets/feed-4-laser.jpg'), linear-gradient(#222, #1a1a1a); }
         .feed-5 { background-image: url('assets/feed-5-interior.jpg'), linear-gradient(#222, #1a1a1a); }
+        .feed-7 { background-image: url('assets/feed-7-product.jpg'), linear-gradient(#222, #1a1a1a); }
+        .feed-8 { background-image: url('assets/feed-8-model.jpg'), linear-gradient(#222, #1a1a1a); }
+        .feed-9 { background-image: url('assets/feed-9-science.jpg'), linear-gradient(#222, #1a1a1a); }
         
-        /* Helper classes for TEAM Images with fallback */
+        /* Helper classes for TEAM Images */
         .team-1 { background-image: url('assets/team-aditya.jpg'), linear-gradient(#222, #1a1a1a); }
         .team-2 { background-image: url('assets/team-rafael.jpg'), linear-gradient(#222, #1a1a1a); }
         .team-3 { background-image: url('assets/team-partner.jpg'), linear-gradient(#222, #1a1a1a); }
@@ -290,11 +295,11 @@
         }
         .logo-text { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: white; letter-spacing: 1px; }
 
-        /* --- RESPONSIVE MOBILE OPTIMIZATION (CRITICAL FIX) --- */
+        /* --- RESPONSIVE MOBILE OPTIMIZATION --- */
         @media (max-width: 1024px) { 
             /* Slide: Allow scrolling, adjust padding for safety */
             .slide { 
-                padding: 100px 25px 140px 25px; /* Bottom padding 140px ensures nav doesn't cover content */
+                padding: 100px 25px 140px 25px; 
                 height: auto; 
                 min-height: 100dvh; 
                 display: none; 
@@ -312,7 +317,7 @@
             /* Stack grids vertically */
             .grid-2, .grid-3, .grid-menu { grid-template-columns: 1fr; gap: 30px; }
             
-            /* Typography adjustments for small screens */
+            /* Typography adjustments */
             h1 { font-size: 2.8rem; margin-bottom: 20px; line-height: 1.1; }
             h2 { font-size: 2.2rem; margin-bottom: 25px; }
             
@@ -320,7 +325,7 @@
             .nav-controls { bottom: 25px; right: 25px; gap: 10px; }
             .btn-nav { width: 50px; height: 50px; font-size: 1.2rem; }
             .page-num { bottom: 25px; left: 25px; font-size: 1.5rem; }
-            .footer-note { display: none; } /* Hide footer note on mobile to save space */
+            .footer-note { display: none; }
             
             /* Logo positioning */
             .logo-brand { left: 25px !important; top: 30px !important; }
@@ -332,7 +337,7 @@
             .big-stat { font-size: 3rem; }
             
             /* Phone mockup responsive fix */
-            .phone-mockup { width: 100%; max-width: 280px; height: auto; aspect-ratio: 9/19; margin-bottom: 20px; }
+            .phone-mockup { width: 100%; max-width: 280px; height: auto; aspect-ratio: 9/20; margin-bottom: 20px; }
         }
 
         /* Small Phones (iPhone SE, etc) */
@@ -520,15 +525,14 @@
                 </div>
             </div>
             
-            <!-- Right: Visual Mockup -->
+            <!-- Right: Visual Mockup (UPDATED 9 FEEDS) -->
             <div>
                 <div class="phone-mockup">
                     <div class="phone-notch"></div>
                     
                     <!-- IG Header -->
                     <div class="ig-header">
-                        <!-- AVATAR: Will load assets/ig-avatar.jpg if present -->
-                        <div class="ig-avatar"><i class="ph-fill ph-user" style="color:#666"></i></div>
+                        <div class="ig-avatar"></div>
                         <div class="ig-stats">
                             <div><span class="ig-num">245</span><span class="ig-lbl">Posts</span></div>
                             <div><span class="ig-num">12.5K</span><span class="ig-lbl">Followers</span></div>
@@ -551,20 +555,22 @@
                         <div class="ig-hl-circle" style="border:1px dashed #444; color:#666;">+</div>
                     </div>
 
-                    <!-- IG Grid -->
+                    <!-- IG Grid (9 POSTS) -->
                     <div class="ig-grid">
-                        <!-- Feed 1: Texture -->
-                        <div class="ig-post feed-1"><i class="ph-fill ph-drop"></i><div class="ig-overlay"><i class="ph-fill ph-play"></i></div></div>
-                        <!-- Feed 2: Doctor -->
-                        <div class="ig-post feed-2"><i class="ph-fill ph-user-focus"></i></div>
-                        <!-- Feed 3: Graphic (CSS only) -->
+                        <!-- Row 1 -->
+                        <div class="ig-post feed-1"><div class="ig-overlay"><i class="ph-fill ph-play"></i></div></div>
+                        <div class="ig-post feed-2"></div>
                         <div class="ig-post" style="background:#f5f5f5;"><span style="font-family:'Playfair Display'; color:#333; font-size:0.6rem; font-weight:bold;">ACNE<br>MYTHS</span></div>
-                        <!-- Feed 4: Laser -->
-                        <div class="ig-post feed-4"><i class="ph-fill ph-lightning"></i><div class="ig-overlay"><i class="ph-fill ph-play"></i></div></div>
-                        <!-- Feed 5: Interior -->
-                        <div class="ig-post feed-5"><i class="ph-fill ph-house-line"></i></div>
-                        <!-- Feed 6: Quote (CSS only) -->
+                        
+                        <!-- Row 2 -->
+                        <div class="ig-post feed-4"><div class="ig-overlay"><i class="ph-fill ph-play"></i></div></div>
+                        <div class="ig-post feed-5"></div>
                         <div class="ig-post" style="background:#111; display:flex; align-items:center; justify-content:center; text-align:center; padding:5px;"><span style="color:#d4af37; font-size:0.5rem; font-family:'Playfair Display';">"Invest in<br>your skin."</span></div>
+                        
+                        <!-- Row 3 (NEW) -->
+                        <div class="ig-post feed-7"></div>
+                        <div class="ig-post feed-8"></div>
+                        <div class="ig-post feed-9"></div>
                     </div>
                 </div>
                 <div class="mockup-label" style="text-align: center; color: #555; margin-top: 10px; font-size: 0.8rem;">Simulated Client Output</div>
