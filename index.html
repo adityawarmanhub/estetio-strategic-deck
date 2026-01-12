@@ -24,7 +24,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: var(--bg);
             color: var(--text); 
-            overflow: hidden; 
+            overflow: hidden; /* Mencegah scrollbar ganda pada body */
             width: 100%;
             height: 100vh;
             height: 100dvh; 
@@ -197,7 +197,6 @@
         /* --- PHONE MOCKUP (UPDATED FOR 9 FEEDS) --- */
         .phone-mockup {
             width: 280px; 
-            /* Height increased slightly to accommodate 9 feeds comfortably */
             height: 600px; 
             background: #000;
             border-radius: 40px;
@@ -295,31 +294,45 @@
         }
         .logo-text { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: white; letter-spacing: 1px; }
 
-        /* --- RESPONSIVE MOBILE OPTIMIZATION --- */
+        /* --- RESPONSIVE MOBILE OPTIMIZATION (FINAL FIX) --- */
         @media (max-width: 1024px) { 
-            /* Slide: Allow scrolling, adjust padding for safety */
+            /* Slide: KUNCI UTAMA RESPONSIVENESS */
             .slide { 
-                padding: 100px 25px 140px 25px; 
-                height: auto; 
-                min-height: 100dvh; 
+                padding: 90px 20px 120px 20px; /* Safe padding for header and footer */
+                
+                /* Force height to match screen, but allow internal scroll */
+                height: 100vh; 
+                height: 100dvh; 
+                
+                /* Override Flex centering for mobile */
+                justify-content: flex-start; 
+                
+                /* Enable Scroll inside the slide */
+                overflow-y: auto; 
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                
+                /* Ensure it's treated as a block for scrolling context */
                 display: none; 
-                overflow-y: auto; /* Enable vertical scroll */
-                justify-content: flex-start; /* Start from top */
-                -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
             }
-            .slide.active { display: flex; }
+            
+            .slide.active { 
+                display: flex; /* Keep flex for column layout, but top aligned */
+                flex-direction: column;
+            }
 
             /* Reset Slide 11 top alignment override for consistency */
             .slide-top {
-                padding-top: 100px !important;
+                padding-top: 90px !important;
+                justify-content: flex-start !important;
             }
 
             /* Stack grids vertically */
             .grid-2, .grid-3, .grid-menu { grid-template-columns: 1fr; gap: 30px; }
             
             /* Typography adjustments */
-            h1 { font-size: 2.8rem; margin-bottom: 20px; line-height: 1.1; }
-            h2 { font-size: 2.2rem; margin-bottom: 25px; }
+            h1 { font-size: 2.5rem; margin-bottom: 15px; line-height: 1.1; }
+            h2 { font-size: 2rem; margin-bottom: 20px; }
             
             /* Adjust controls positions */
             .nav-controls { bottom: 25px; right: 25px; gap: 10px; }
@@ -328,7 +341,7 @@
             .footer-note { display: none; }
             
             /* Logo positioning */
-            .logo-brand { left: 25px !important; top: 30px !important; }
+            .logo-brand { left: 25px !important; top: 25px !important; }
             .logo-symbol { width: 35px; height: 35px; font-size: 1.2rem; }
             .logo-text { font-size: 1.2rem; }
             
