@@ -95,6 +95,12 @@
         }
         
         .slide.active { display: flex; opacity: 1; }
+
+        /* Utility Class for Top Aligned Slide (Slide 11) */
+        .slide-top {
+            justify-content: flex-start;
+            padding-top: 80px;
+        }
         
         /* TYPOGRAPHY */
         h1 { font-family: 'Playfair Display', serif; font-size: 4rem; line-height: 1.1; margin-bottom: 25px; color: white; text-shadow: 0 4px 30px rgba(0,0,0,0.8); }
@@ -133,21 +139,15 @@
             background: rgba(255, 255, 255, 0.07);
         }
         
-        /* FIX: COMPACT CARD STYLE (Agar tidak meniban footer) */
-        .card-compact {
-            padding: 25px !important;
-        }
-        .card-compact .elaboration {
-            margin-top: 10px;
-            padding-top: 10px;
-        }
+        .card-compact { padding: 25px !important; }
+        .card-compact .elaboration { margin-top: 10px; padding-top: 10px; }
         .card-compact h3 { margin-bottom: 5px; }
         .card-compact p { margin-bottom: 8px; }
         .card-compact .thesis-box { margin: 10px 0; padding: 10px; }
 
         .card-icon { font-size: 2.2rem; color: var(--accent); margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent-glow)); }
         
-        /* IMAGE CARD (Visual Edge) */
+        /* IMAGE CARD */
         .card-visual {
             background-image: url('assets/visual-edge.jpg'), linear-gradient(45deg, #1a1a1a 25%, #222 25%, #222 50%, #1a1a1a 50%, #1a1a1a 75%, #222 75%, #222 100%);
             background-size: cover, 20px 20px;
@@ -290,32 +290,57 @@
         }
         .logo-text { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: white; letter-spacing: 1px; }
 
-        /* RESPONSIVE MOBILE TWEAKS */
+        /* --- RESPONSIVE MOBILE OPTIMIZATION (CRITICAL FIX) --- */
         @media (max-width: 1024px) { 
+            /* Slide: Allow scrolling, adjust padding for safety */
             .slide { 
-                padding: 100px 25px 120px 25px; 
+                padding: 100px 25px 140px 25px; /* Bottom padding 140px ensures nav doesn't cover content */
                 height: auto; 
                 min-height: 100dvh; 
                 display: none; 
-                overflow-y: auto; 
-                justify-content: flex-start;
+                overflow-y: auto; /* Enable vertical scroll */
+                justify-content: flex-start; /* Start from top */
+                -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
             }
             .slide.active { display: flex; }
 
+            /* Reset Slide 11 top alignment override for consistency */
+            .slide-top {
+                padding-top: 100px !important;
+            }
+
+            /* Stack grids vertically */
             .grid-2, .grid-3, .grid-menu { grid-template-columns: 1fr; gap: 30px; }
-            h1 { font-size: 2.5rem; margin-bottom: 15px; }
-            h2 { font-size: 2rem; margin-bottom: 20px; }
+            
+            /* Typography adjustments for small screens */
+            h1 { font-size: 2.8rem; margin-bottom: 20px; line-height: 1.1; }
+            h2 { font-size: 2.2rem; margin-bottom: 25px; }
+            
+            /* Adjust controls positions */
             .nav-controls { bottom: 25px; right: 25px; gap: 10px; }
-            .btn-nav { width: 45px; height: 45px; font-size: 1.2rem; }
+            .btn-nav { width: 50px; height: 50px; font-size: 1.2rem; }
             .page-num { bottom: 25px; left: 25px; font-size: 1.5rem; }
-            .footer-note { display: none; }
+            .footer-note { display: none; } /* Hide footer note on mobile to save space */
+            
+            /* Logo positioning */
             .logo-brand { left: 25px !important; top: 30px !important; }
             .logo-symbol { width: 35px; height: 35px; font-size: 1.2rem; }
             .logo-text { font-size: 1.2rem; }
+            
             .watermark { font-size: 15vw; opacity: 0.02; }
             .card { padding: 25px; }
-            .big-stat { font-size: 2.5rem; }
-            .phone-mockup { width: 100%; max-width: 280px; height: auto; aspect-ratio: 9/19; }
+            .big-stat { font-size: 3rem; }
+            
+            /* Phone mockup responsive fix */
+            .phone-mockup { width: 100%; max-width: 280px; height: auto; aspect-ratio: 9/19; margin-bottom: 20px; }
+        }
+
+        /* Small Phones (iPhone SE, etc) */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .card { padding: 20px; }
+            .slide { padding: 90px 20px 120px 20px; }
         }
     </style>
 </head>
@@ -668,7 +693,7 @@
     </div>
 
     <!-- SLIDE 11: THE GROWTH TRINITY (REVISED LAYOUT & TEXT) -->
-    <div class="slide" style="justify-content: flex-start; padding-top: 80px;">
+    <div class="slide slide-top">
         <!-- Tag REMOVED per user request -->
         <h2>The "Alpha" Configuration.</h2>
         <p style="margin-bottom: 20px; color: var(--muted); font-size: 1.1rem;">
@@ -772,6 +797,9 @@
             slides.forEach(s => s.classList.remove('active'));
             slides[n].classList.add('active');
             updateUI();
+            // Scroll to top of slide when changing (important for mobile)
+            window.scrollTo(0, 0);
+            slides[n].scrollTo(0, 0);
         }
 
         function nextSlide() {
@@ -817,4 +845,3 @@
     </script>
 </body>
 </html>
-```
